@@ -7,10 +7,15 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
 
+console.time('App Bootstrap');
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
+    snapshot: true,
   });
+  console.timeEnd('App Bootstrap');
+
   const configService = app.get(ConfigService);
 
   app.use(helmet());
@@ -27,5 +32,7 @@ async function bootstrap() {
 
   const port = configService.get('PORT') || 3000;
   await app.listen(port);
+
+  console.log(`App running on http://localhost:${port}`);
 }
 bootstrap();

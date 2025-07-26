@@ -5,4 +5,12 @@ export const MESSAGES = {
   INVALID_CREDENTIALS: 'Invalid email or password',
   UNAUTHORIZED: 'Unauthorized access',
   INTERNAL_SERVER_ERROR: 'An unexpected error occurred',
+  POLL_CREATED: 'Poll created successfully',
+  POLL_UPDATED: 'Poll updated successfully',
+  POLL_DELETED: 'Poll deleted successfully',
+  POLL_NOT_FOUND: 'Poll not found',
+  POLL_EXPIRED: 'Poll has expired',
+  POLL_ALREADY_VOTED: 'User has already voted on this poll',
+  POLL_VOTE_SUCCESS: 'Vote recorded successfully',
+  INVALID_OPTION: 'Invalid poll option',
 };

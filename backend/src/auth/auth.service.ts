@@ -11,8 +11,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtPayload } from './JwtPayload';
 import { User } from './schemas/auth.schema';
-import { AppLogger } from 'src/common/logger/logger.service';
-
+import { AppLogger } from '../common/logger/logger.service';
 @Injectable()
 export class AuthService {
   constructor(
@@ -35,7 +34,7 @@ export class AuthService {
       password: hashedPassword,
       role: 'user',
     });
-
+    this.logger.log(`User created: ${user.email}`);
     return this.generateTokens(user);
   }
 

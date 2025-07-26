@@ -1,9 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { JwtPayload } from 'auth/JwtPayload';
 
 export const User = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
+  (data: unknown, ctx: ExecutionContext): JwtPayload => {
     const request = ctx.switchToHttp().getRequest();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return request.user;
+    return request.user as JwtPayload;
   },
 );
