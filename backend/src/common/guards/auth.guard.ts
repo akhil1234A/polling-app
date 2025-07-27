@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  Logger,
+  ExecutionContext,
+} from '@nestjs/common';
 import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 
@@ -22,18 +27,5 @@ export class AuthGuard extends PassportAuthGuard('jwt') {
 
     this.logger.debug('Authenticating with JWT strategy');
     return super.canActivate(context);
-  }
-
-  handleRequest(err, user, info) {
-    this.logger.debug(
-      `User: ${JSON.stringify(user)}, Info: ${JSON.stringify(info)}, Error: ${err}`,
-    );
-    if (err || !user) {
-      this.logger.warn(
-        `Authentication failed: ${info?.message || 'No user found'}`,
-      );
-      throw err || new UnauthorizedException('Invalid or missing token');
-    }
-    return user;
   }
 }

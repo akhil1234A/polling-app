@@ -21,6 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
           this.logger.debug(
             `Extracted accessToken: ${token ? 'present' : 'missing'}`,
           );
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return token;
         },
       ]),

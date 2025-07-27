@@ -104,6 +104,7 @@ export class AuthService {
   }
 
   private generateAccessToken(email: string, role: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.jwtService.sign(
       { id: email, email, role },
       {
@@ -114,6 +115,7 @@ export class AuthService {
   }
 
   private generateRefreshToken(email: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.jwtService.sign(
       { id: email },
       {

@@ -5,7 +5,7 @@ export type PollDocument = HydratedDocument<Poll>;
 
 @Schema({ timestamps: true, toJSON: { virtuals: true } })
 export class Poll {
-  id?: string;
+  _id?: string;
 
   @Prop({ required: true, trim: true })
   question: string;
@@ -43,7 +43,7 @@ export class Poll {
 export const PollSchema = SchemaFactory.createForClass(Poll);
 
 PollSchema.virtual('id').get(function () {
-  return this._id.toHexString() as string;
+  return this._id.toString() as string;
 });
 
 PollSchema.index({ createdBy: 1, isActive: 1 });

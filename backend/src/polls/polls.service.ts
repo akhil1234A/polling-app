@@ -86,7 +86,9 @@ export class PollsService {
         polls.map(async (poll) => {
           if (poll.expiresAt && poll.expiresAt < new Date() && poll.isActive) {
             poll.isActive = false;
-            await this.pollsRepository.update(poll._id, { isActive: false });
+            await this.pollsRepository.update(poll._id || '', {
+              isActive: false,
+            });
           }
           return poll;
         }),
