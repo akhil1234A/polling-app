@@ -3,6 +3,8 @@
 
 A secure polling application built with a **NestJS backend** and **Next.js frontend**. It supports public/private polls, voting, and result display, all secured with JWT-based authentication and role-based access control.
 
+[Live Demo](https://polling-app-two-rho.vercel.app)
+
 ---
 
 ## ✨ Features

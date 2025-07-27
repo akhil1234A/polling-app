@@ -21,12 +21,17 @@ type FormData = z.infer<typeof schema>;
 export default function LoginPage() {
   const { setUser } = useAuth();
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      email: 'admin@gmail.com',
+      password: 'Admin@123',
+    },
   });
 
   const onSubmit = async (data: FormData) => {
