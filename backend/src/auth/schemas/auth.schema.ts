@@ -1,25 +1,18 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema({ timestamps: true, toJSON: { virtuals: true } })
+@Schema({ timestamps: true })
 export class User {
-  id?: string;
-
   @Prop({ required: true, unique: true })
-  email!: string;
+  email: string;
 
   @Prop({ required: true })
-  password!: string;
+  password: string;
 
-  @Prop({ enum: ['admin', 'user'], default: 'user' })
-  role!: 'admin' | 'user';
+  @Prop({ default: 'user' })
+  role: 'user' | 'admin';
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-
-UserSchema.virtual('id').get(function () {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return this._id.toHexString();
-});

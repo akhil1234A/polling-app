@@ -1,4 +1,4 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type PollDocument = HydratedDocument<Poll>;
@@ -7,17 +7,25 @@ export type PollDocument = HydratedDocument<Poll>;
 export class Poll {
   id?: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, trim: true })
   question: string;
 
-  @Prop({ type: [String], required: true })
+  @Prop({
+    type: [String],
+    required: true,
+    validate: {
+      validator: (options: string[]) =>
+        options.length >= 2 && new Set(options).size === options.length,
+      message: 'At least two unique options required',
+    },
+  })
   options: string[];
 
   @Prop({ type: String, required: true })
   createdBy: string;
 
-  @Prop({ type: Date })
-  expiresAt?: Date;
+  @Prop()
+  expiresAt: Date;
 
   @Prop({ default: true })
   isActive: boolean;
@@ -35,9 +43,8 @@ export class Poll {
 export const PollSchema = SchemaFactory.createForClass(Poll);
 
 PollSchema.virtual('id').get(function () {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return this._id.toHexString();
+  return this._id.toHexString() as string;
 });
 
-// Minimal index for performance
 PollSchema.index({ createdBy: 1, isActive: 1 });
+PollSchema.index({ 'votes.userId': 1 });

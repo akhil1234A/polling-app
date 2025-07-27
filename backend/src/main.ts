@@ -6,6 +6,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
 
 console.time('App Bootstrap');
 
@@ -24,7 +25,10 @@ async function bootstrap() {
     credentials: true,
   });
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.use(express.json());
+  app.useGlobalPipes(
+    new ValidationPipe({ transform: true, skipMissingProperties: true }),
+  );
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new LoggingInterceptor());
 
