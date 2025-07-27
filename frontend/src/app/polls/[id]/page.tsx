@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import api from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
@@ -46,11 +46,9 @@ const voteSchema = z.object({
 type UpdateFormData = z.infer<typeof updateSchema>;
 type VoteFormData = z.infer<typeof voteSchema>;
 
-interface PollPageProps {
-  params: { id: string };
-}
 
-export default function PollPage({ params }: PollPageProps) {
+export default function PollPage() {
+  const {id} = useParams();  
   const router = useRouter();
   const { user } = useAuth();
   const [poll, setPoll] = useState<Poll | null>(null);
@@ -77,7 +75,7 @@ export default function PollPage({ params }: PollPageProps) {
   useEffect(() => {
     const loadPoll = async () => {
       try {
-        const res = await api.get(`/polls/${params.id}`);
+        const res = await api.get(`/polls/${id}`);
         const p: Poll = res.data.poll;
         setPoll(p);
         resetUpdate({
@@ -93,7 +91,7 @@ export default function PollPage({ params }: PollPageProps) {
       }
     };
     loadPoll();
-  }, [params.id, resetUpdate]);
+  }, [id, resetUpdate]);
 
   useEffect(() => {
     if (poll?.expiresAt && poll.isActive) {
@@ -109,7 +107,7 @@ export default function PollPage({ params }: PollPageProps) {
 
   const onUpdateSubmit = async (data: UpdateFormData) => {
     try {
-      const res = await api.patch(`/polls/${params.id}`, data);
+      const res = await api.patch(`/polls/${id}`, data);
       setPoll(res.data.poll);
       setIsEditing(false);
       toast.success('Poll updated');
@@ -120,18 +118,19 @@ export default function PollPage({ params }: PollPageProps) {
 
   const onVoteSubmit = async (data: VoteFormData) => {
     try {
-      const res = await api.post(`/polls/${params.id}/vote`, data);
+      const res = await api.post(`/polls/${id}/vote`, data);
       setPoll(res.data.poll);
       toast.success('Vote recorded');
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Vote failed');
+    } catch (err) {
+    const error = err as Error;
+      toast.error(error.message || 'Vote failed');
     }
   };
 
   const deletePoll = async () => {
     if (confirm('Delete this poll?')) {
       try {
-        await api.delete(`/polls/${params.id}`);
+        await api.delete(`/polls/${id}`);
         toast.success('Poll deleted');
         router.push('/dashboard');
       } catch {
@@ -165,6 +164,7 @@ export default function PollPage({ params }: PollPageProps) {
           <Input label="Question" {...updateRegister('question')} error={updateErrors.question?.message} />
           {poll.options.map((opt, i) => (
             <Input
+              label='Options'
               key={i}
               {...updateRegister(`options.${i}`)}
               defaultValue={opt}

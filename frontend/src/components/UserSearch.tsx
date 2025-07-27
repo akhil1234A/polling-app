@@ -1,14 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Control, useController } from 'react-hook-form';
+import { Control, useController, FieldValues, Path } from 'react-hook-form';
 import api from '../lib/api';
 import { toast } from 'sonner';
 import debounce from 'lodash/debounce';
 
-interface UserSearchProps {
-  control: Control;
-  name: string;
+interface UserSearchProps<T extends FieldValues> {
+  control: Control<T>;
+  name: Path<T>;
   error?: string;
 }
 
@@ -17,11 +17,11 @@ interface User {
   email: string;
 }
 
-export default function UserSearch({ control, name, error }: UserSearchProps) {
+export default function UserSearch<T extends FieldValues>({ control, name, error }: UserSearchProps<T>) {
   const { field } = useController({ control, name });
   const [query, setQuery] = useState('');
   const [users, setUsers] = useState<User[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>(field.value || []);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>(Array.isArray(field.value) ? field.value : []);
 
   useEffect(() => {
     const fetchUsers = debounce(async () => {
