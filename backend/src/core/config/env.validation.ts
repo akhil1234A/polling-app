@@ -7,7 +7,6 @@ export const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
   FRONTEND_URL: z.string().url(),
   MONGO_URI: z.string().min(1, 'MONGO_URI is required'),
-  REDIS_URL: z.string().min(1, 'REDIS_URL is required'),
   JWT_ACCESS_SECRET: z
     .string()
     .min(10, 'JWT access secret must be at least 10 chars'),
