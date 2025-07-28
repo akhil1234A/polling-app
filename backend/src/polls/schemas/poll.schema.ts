@@ -43,7 +43,7 @@ export class Poll {
 export const PollSchema = SchemaFactory.createForClass(Poll);
 
 PollSchema.virtual('id').get(function () {
-  return this._id.toString() as string;
+  return this._id.toString();
 });
 
 PollSchema.index({ createdBy: 1, isActive: 1 });

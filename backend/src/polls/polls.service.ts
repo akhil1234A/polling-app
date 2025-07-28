@@ -10,7 +10,7 @@ import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { VoteDto } from './dto/vote.dto';
 import { MESSAGES } from '../common/constants/messages';
-import { JwtPayload } from '../auth/JwtPayload';
+import { JwtPayload } from '../auth/types/JwtPayload';
 import { Poll } from './schemas/poll.schema';
 import { MongoError } from 'mongodb';
 import { MongooseError } from 'mongoose';

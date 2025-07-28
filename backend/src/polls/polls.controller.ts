@@ -9,13 +9,12 @@ import {
   Res,
   HttpStatus,
   UseGuards,
-  UsePipes,
   Query,
   Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { PollsService } from './polls.service';
-import { CreatePollDto } from './dto/create-poll.dto';
+import { CreatePollDto, createPollPipe } from './dto/create-poll.dto';
 import { UpdatePollDto, updatePollPipe } from './dto/update-poll.dto';
 import { VoteDto, votePipe } from './dto/vote.dto';
 import { User } from '../common/decorators/user.decorator';
@@ -23,7 +22,7 @@ import { AuthGuard } from '../common/guards/auth.guard';
 import { RolesGuard } from '../common/guards/role.guard';
 import { Roles } from '../common/decorators/role.decorator';
 import { MESSAGES } from '../common/constants/messages';
-import { JwtPayload } from '../auth/JwtPayload';
+import { JwtPayload } from '../auth/types/JwtPayload';
 
 @Controller('polls')
 @UseGuards(AuthGuard, RolesGuard)
@@ -35,7 +34,7 @@ export class PollsController {
   @Roles('admin')
   @Post()
   async create(
-    @Body() createPollDto: CreatePollDto,
+    @Body(createPollPipe) createPollDto: CreatePollDto,
     @User() user: JwtPayload,
     @Res() res: Response,
   ) {
@@ -54,7 +53,7 @@ export class PollsController {
         error: error.message,
         userId: user.id,
       });
-      throw error; // Handled by HttpExceptionFilter
+      throw error;
     }
   }
 
@@ -113,10 +112,9 @@ export class PollsController {
 
   @Roles('admin')
   @Patch(':id')
-  // @UsePipes(updatePollPipe)
   async update(
     @Param('id') id: string,
-    @Body() updatePollDto: UpdatePollDto,
+    @Body(updatePollPipe) updatePollDto: UpdatePollDto,
     @User() user: JwtPayload,
     @Res() res: Response,
   ) {
@@ -159,10 +157,9 @@ export class PollsController {
 
   @Roles('user', 'admin')
   @Post(':id/vote')
-  // @UsePipes(votePipe)
   async vote(
     @Param('id') id: string,
-    @Body() voteDto: VoteDto,
+    @Body(votePipe) voteDto: VoteDto,
     @User() user: JwtPayload,
     @Res() res: Response,
   ) {
