@@ -14,12 +14,12 @@ import { Response, Request } from 'express';
 import { AuthService } from './auth.service';
 import { RegisterDto, registerPipe } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import { Public } from '../common/decorators/public.decorator';
-import { getCookieOptions } from '../common/utils/helpers';
+import { Public } from '@common/decorators/public.decorator';
+import { getCookieOptions } from '@common/utils/helpers';
 import { ConfigService } from '@nestjs/config';
-import { Roles } from '../common/decorators/role.decorator';
-import { AuthGuard } from '../common/guards/auth.guard';
-import { RolesGuard } from '../common/guards/role.guard';
+import { Roles } from '@common/decorators/role.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
+import { RolesGuard } from '@common/guards/role.guard';
 
 @Controller('auth')
 export class AuthController {

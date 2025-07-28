@@ -17,12 +17,12 @@ import { PollsService } from './polls.service';
 import { CreatePollDto, createPollPipe } from './dto/create-poll.dto';
 import { UpdatePollDto, updatePollPipe } from './dto/update-poll.dto';
 import { VoteDto, votePipe } from './dto/vote.dto';
-import { User } from '../common/decorators/user.decorator';
-import { AuthGuard } from '../common/guards/auth.guard';
-import { RolesGuard } from '../common/guards/role.guard';
-import { Roles } from '../common/decorators/role.decorator';
-import { MESSAGES } from '../common/constants/messages';
-import { JwtPayload } from '../auth/types/JwtPayload';
+import { User } from '@common/decorators/user.decorator';
+import { AuthGuard } from '@common/guards/auth.guard';
+import { RolesGuard } from '@common/guards/role.guard';
+import { Roles } from '@common/decorators/role.decorator';
+import { MESSAGES } from '@common/constants/messages';
+import { JwtPayload } from '@auth/types/JwtPayload';
 
 @Controller('polls')
 @UseGuards(AuthGuard, RolesGuard)

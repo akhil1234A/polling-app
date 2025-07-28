@@ -7,8 +7,8 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { STATUS_CODES } from '../constants/status-codes';
-import { MESSAGES } from '../constants/messages';
+import { STATUS_CODES } from '@common/constants/status-codes';
+import { MESSAGES } from '@common/constants/messages';
 import { MongoError } from 'mongodb';
 import { MongooseError } from 'mongoose';
 

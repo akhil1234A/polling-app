@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ZodValidationPipe } from '../../common/validation/zod-pipe';
+import { ZodValidationPipe } from '@common/validation/zod-pipe';
 
 export const updatePollSchema = z.object({
   question: z.string().min(1, 'Question cannot be empty').optional(),
