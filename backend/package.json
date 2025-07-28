@@ -5,11 +5,18 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "_moduleAliases": {
+    "@common": "dist/common",
+    "@auth": "dist/auth",
+    "@core": "dist/common",
+    "@health": "dist/health",
+    "@polls": "dist/polls"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main",
-    "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "start:dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/main.ts",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -37,6 +44,7 @@
     "class-validator": "^0.14.2",
     "cookie-parser": "^1.4.7",
     "helmet": "^8.1.0",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.16.4",
     "nestjs-pino": "^4.4.0",
     "passport-jwt": "^4.0.1",

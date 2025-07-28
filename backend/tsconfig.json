@@ -23,7 +23,7 @@
       "@auth/*":["src/auth/*"],
       "@core/*":["src/common/*"],
       "@health/*":["src/health/*"],
-      "@polls/*":["scr/polls/*"],
+      "@polls/*":["src/polls/*"],
     }
   },
     "include": ["src/**/*"],
